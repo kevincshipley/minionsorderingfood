@@ -157,3 +157,52 @@ float applyDiscount(DeliveryOrder ordr, Account& acct) // take in a DeliveryOrde
         return ordr.getOrderBalance() * 1; // no modification to order for Regular users
     }
 };
+
+/*Here's the expected output.
+
+Kevin placing order.
+Invalid input "Iron Goddess".
+Not serving requested drinks. Drink order ignored.
+
+Order Detail:
+        Name: Kevin
+        Date: 11/20/2022
+        Phone: 123-456-0000
+        Order Balance: $32.70
+        Drinks Count: 4
+Balance: $51.24
+Discounted Balance: $48.68
+
+
+Stuart placing order.
+Order Detail:
+        Name: Stuart
+        Date: 11/20/2022
+        Phone: 123-456-1111
+        Order Balance: $92.00
+        Food Count: 3
+Balance: $138.53
+Discounted Balance: $13.85
+
+
+Bob decided to log in to his account and see whether he can afford ordering the same order as Stuart.
+Order Detail:
+        Name: Stuart
+        Date: 11/20/2022
+        Phone: 123-456-1111
+        Order Balance: $92.00
+        Food Count: 3
+Balance: $138.53
+Discounted Balance: $138.53
+Bob upset, cancelling order :(
+
+Total order placed: 2
+
+FoodOrder destroyed.
+DeliveryOrder destroyed.
+BobaOrder destroyed.
+DeliveryOrder destroyed.
+Account removed.
+Account removed.
+Account removed.
+*/
