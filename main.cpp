@@ -157,5 +157,3 @@ float applyDiscount(DeliveryOrder ordr, Account& acct) // take in a DeliveryOrde
         return ordr.getOrderBalance() * 1; // no modification to order for Regular users
     }
 };
-
-// 
