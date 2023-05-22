@@ -90,7 +90,7 @@ int main () {
      
     // Then we want to output the discounted balance like this "Discounted Balance: $88.88\n".
     // We get the discounted balance by having our DeliveryOrder pointer points to Kevin's order and trigger the applyDiscount() function with Kevin's account.
-    order=&kOrder;
+    //order=&kOrder;
     cout << "Discounted Balance: $" << applyDiscount(kOrder, kevin) << endl;
 
     //// STUART PLACING ORDER ////
@@ -99,26 +99,41 @@ int main () {
 
     // Stuart creates his order with name "Stuart", same date as Kevin's order. His phone number is "123-456-1111". He's ordering from the restaurant "Tavern Green" which is 25.5 miles from their place.
     FoodOrder sOrder("Stuart", "11/20/2022", "123-456-1111", 25.5, "Tavern Green");
+    // Similarly here that each of the addFood() function could cause exception, let's put all the addFood() function calls in a try catch block. Catch the InvalidInput exception by reference and trigger the print_reason() function of the exception.
+    try {
+        sOrder.addFood("Thick Cauliflower Steaks", 1, 1); // He's ordering a "Thick Cauliflower Steaks" with one sides and soup, a "Organic Scottish Salmon" with no side no soup
+    }
+    catch (InvalidInput &) {
+        throw InvalidInput("Thick Cauliflower Steaks");
+        cout << "Not serving requested food. Food order ignored.\n\n";
+    }
+    try {
+        sOrder.addFood("Rack of Lamb", 0, 1); // and a "Rack of Lamb" with one soup and no side.
+    }
+    catch (InvalidInput &) {
+        throw InvalidInput("Rack of Lamb");
+        cout << "Not serving requested food. Food order ignored.\n\n";
+    }
     
-    // He's ordering a "Thick Cauliflower Steaks" with one sides and soup, a "Organic Scottish Salmon" with no side no soup, and a "Rack of Lamb" with one soup and no side.
-
-    // Similarly here that each of the addFood() function could cause exception, let's put all the addFood() function calls in a try catch block. Catch the InvalidInput exception by reference and trigger the print_reason() function of the exception. Then output
-
-    // "Not serving requested food. Food order ignored.\n\n"
-    // before we end the catch block.
-
-    // Now the system print out his receipt. Similarly we first call receipt() to print out the receipt for his order. Then we output the delivery balance by calling getTotalBalance() function. Same format as indicated above. Then we output the discounted balance using the same format as above as well. You would need to get the discounted balance by calling the applyDiscount() function as well. And we finish the receipt with two extra new lines.
+    sOrder.receipt(); // Now the system print out his receipt. Similarly we first call receipt() to print out the receipt for his order.
+    cout << "Balance: $" << sOrder.getTotalBalance() << endl; // Then we output the delivery balance by calling getTotalBalance() function. Same format as indicated above.
+    cout << "Discounted Balance: $" << applyDiscount(sOrder, stuart) << endl; // Then we output the discounted balance using the same format as above as well.
+    // You would need to get the discounted balance by calling the applyDiscount() function as well.
 
     //// BOB PLACING ORDER ////
     // Now Bob found out that Stuart get such good pricing on food ordering, he's wondering whether he can get that too. Let's output
+    cout << "Bob decided to log in to his account and see whether he can afford ordering the same order as Stuart." << endl;
 
-    // "Bob decided to log in to his account and see whether he can afford ordering the same order as Stuart.\n"
-    // Bob is trying to place the same order, so he's using the same order object that Stuart created. We can start by printing the receipt for Bob. We can directly call the receipt() function from the order Stuart created. Then we output the delivery balance as before by calling getTotalBalance() function. Followed by printing out the discounted balance but this time we pass in Bob's account to the applyDiscount() function. Keep the same format as before when you print. Bob sees the discounted balance and he's upset that he needs to pay so much. Therefore he decided not to place the order and have Stuart do it. Therefore the system will output
-
-    // "Bob upset, cancelling order :(\n\n"
+    // Bob is trying to place the same order, so he's using the same order object that Stuart created. We can start by printing the receipt for Bob. We can directly call the receipt() function from the order Stuart created.
+    sOrder.receipt(); 
+    cout << "Balance: $" << sOrder.getTotalBalance() << endl; 
+    cout << "Discounted Balance: $" << applyDiscount(sOrder, bob) << endl;
+    // Then we output the delivery balance as before by calling getTotalBalance() function. Followed by printing out the discounted balance but this time we pass in Bob's account to the applyDiscount() function. Keep the same format as before when you print. Bob sees the discounted balance and he's upset that he needs to pay so much. Therefore he decided not to place the order and have Stuart do it.
+    cout << "Bob is upset, cancelling order :(\n\n";
+    
     // Finally, we will output the number of order placed. The format will be
 
-    // "Total order placed: 2.\n\n"
+    cout << "Total order placed: " << DeliveryOrder::getOrderCount() << ".\n\n";
     // You get the number of order placed by calling the static function getOrderCount() from DeliveryOrder.
 
     return 0;
